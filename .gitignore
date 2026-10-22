@@ -1,4 +1,5 @@
 /build/
 /chessholic
 /.tmp/
+/.vscode/
 /tests/

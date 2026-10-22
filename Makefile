@@ -14,7 +14,7 @@ TARGET := chessholic
 BUILD_DIR := build
 
 # Find all C++ source files in the source directory.
-SOURCES := $(shell find code/src -type f \( -name '*.cpp'\))
+SOURCES := $(shell find code/src -type f -name '*.cpp')
 
 # Convert source paths into matching object-file paths inside build/.
 OBJECTS := $(patsubst code/src/%,$(BUILD_DIR)/%,$(SOURCES))
@@ -37,8 +37,9 @@ $(BUILD_DIR)/%.o: code/src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Build the executable if needed, then run it.
+# SDL_VIDEO_X11_FORCE_EGL=1 
 run: $(TARGET)
-	SDL_VIDEO_X11_FORCE_EGL=1 ./$(TARGET)
+	./$(TARGET)
 
 # Remove generated object files and the executable.
 clean:
