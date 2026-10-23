@@ -8,13 +8,11 @@ class Game
 {
 
     private:
-    
-    Display* display;
+        Display* display;
     
     public:
         Game();
         ~Game();
-        
         
         int run();
 

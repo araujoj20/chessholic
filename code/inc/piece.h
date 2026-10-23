@@ -17,23 +17,14 @@ enum PieceColor {
 struct PieceID {
     PieceType type;
     PieceColor color;
-
-    bool operator<(const PieceID& other) const
-    {
-        if (type != other.type) {
-            return type < other.type;
-        }
-
-        return color < other.color;
-    }
 };
 
-
-// #include <map>
-
-// textures[{PieceType::King, PieceColor::White}] = whiteKing;
-
-// SDL_Texture* texture = textures.at({
-//     PieceType::King,
-//     PieceColor::White
-// });
+class Piece
+{
+    private:
+        
+    public:
+        Piece();
+        ~Piece();
+        //virtual 
+};

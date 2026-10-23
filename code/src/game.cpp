@@ -14,7 +14,7 @@ int Game::run()
 {
     bool done = false;
 
-    PieceID pieceTest{KNIGHT, BLACK};
+    PieceID pieceTest{QUEEN, BLACK};
     Position pieceTestPos{7, 7};
 
     while (!done) {
