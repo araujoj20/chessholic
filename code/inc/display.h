@@ -9,6 +9,10 @@
 #include "piece.h"
 #include "board.h"
 
+enum SquareColor {
+    GREEN,
+    RED
+};
 class Display {
 
     private:
@@ -19,8 +23,10 @@ class Display {
         
         std::array<std::array<SDL_Texture*, 6>, 2> pieceTexture_;
         
-        unsigned int windowWidth_  = 800;
-        unsigned int windowHeight_ = 800;
+        int windowWidth_  = 800;
+        int windowHeight_ = 800;
+        int boardWidth_   = 800;
+        int squareWidth  = (boardWidth_/8);
         void initSDL() const;
         void initImage() const;    
         void createWindow();
@@ -30,14 +36,16 @@ class Display {
         SDL_Rect texturePosition(Position pos);
 
     public:
-        Display(); // == default (no need to implement func)
+        Display();
         ~Display();
 
         //void changeWindowSize(unsigned int);
         void renderTexture(SDL_Texture* texture, const SDL_Rect* position);
         void renderPiece(PieceID id, Position position);
         void renderBoard();
+        void renderSquare(SquareColor color, Position pos);
         void renderPresent();
         void renderClean();
+        void renderSetColor(int r, int g, int b, int opacity);
         SDL_Texture* textureFor(PieceID piece) const;
 };

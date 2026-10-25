@@ -6,15 +6,16 @@
 #include <memory>
 struct Position
 {
-    unsigned int row;
-    unsigned int column;
+    int column;
+    int row;
 };
 
 class Board {
 
     private:
-    
-        std::array<std::array<std::unique_ptr<Piece>, 8>, 8> squares_;
+        Board();
+        ~Board() = default;
+        std::array<std::array<std::unique_ptr<Piece>, 8>, 8> board_;
 
     public:
     

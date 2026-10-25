@@ -8,6 +8,5 @@
 
 int main(){
 
-    Game game;
-    return game.run();
+    Game gm    return game.run();
 }

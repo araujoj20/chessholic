@@ -55,7 +55,7 @@ void Display::createWindow()
 		SDL_WINDOWPOS_CENTERED,
         windowWidth_,               // width, in pixels
         windowHeight_,              // height, in pixels
-        SDL_WINDOW_RESIZABLE        // flags - see below
+        SDL_WINDOW_RESIZABLE        // flags
     );
 
     if (window_ == NULL) {
@@ -69,11 +69,47 @@ void Display::createRenderer()
         window_,
         -1,
         SDL_RENDERER_ACCELERATED    // The renderer_ uses hardware acceleration
-    );
-
-    if (renderer_ == NULL) {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
+    );    
+    
+    if (renderer_ == NULL){
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create renderer: %s\n", SDL_GetError());
     }
+    
+    if (SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND)){
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not change renderer mode: %s\n", SDL_GetError());
+    }
+}
+
+void Display::renderSetColor(int r, int g, int b, int opacity)
+{
+    if (SDL_SetRenderDrawColor(
+        renderer_,
+        static_cast<Uint8>(r),
+        static_cast<Uint8>(g),
+        static_cast<Uint8>(b),
+        static_cast<Uint8>(opacity))){
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not set renderer color: %s\n", SDL_GetError());
+    }
+}
+
+void Display::renderSquare(SquareColor color, Position pos)
+{
+    SDL_Rect square = texturePosition(pos);
+
+    switch (color)
+    {
+        case SquareColor::GREEN:
+            renderSetColor(170, 220, 190, 200);
+            break;
+
+        case SquareColor::RED:
+            renderSetColor(170, 0, 0, 200);
+            break;
+
+        default:
+            return;
+    }
+    SDL_RenderFillRect(renderer_, &square);
 }
 
 SDL_Texture* Display::loadBoard() const
@@ -153,21 +189,18 @@ void Display::renderBoard()
 
 void Display::renderPiece(PieceID id, Position position)
 {
-    SDL_Rect rectangle = texturePosition(position);
+    SDL_Rect square = texturePosition(position);
     SDL_Texture* texture = textureFor(id);
-    renderTexture(texture, &rectangle); // TODO
+    renderTexture(texture, &square); // TODO
 }
 
 SDL_Rect Display::texturePosition(Position pos)
 {
-    const int squareWidth  = static_cast<int>(windowWidth_ / 8);
-    const int squareHeight = static_cast<int>(windowHeight_ / 8);
-
     return {
-        static_cast<int>(pos.column * squareWidth),
-        static_cast<int>(pos.row * squareHeight),
+        (pos.column * squareWidth),
+        (pos.row * squareWidth),
         squareWidth,
-        squareHeight
+        squareWidth
     };
 }
 
