@@ -34,7 +34,6 @@ class Display {
         SDL_Texture* loadBoard() const;
         void loadPieces();
         SDL_Rect texturePosition(Position pos);
-
     public:
         Display();
         ~Display();
@@ -43,6 +42,7 @@ class Display {
         void renderTexture(SDL_Texture* texture, const SDL_Rect* position);
         void renderPiece(PieceID id, Position position);
         void renderBoard();
+        void renderPieces(const BoardSquares& boardSquares);
         void renderSquare(SquareColor color, Position pos);
         void renderPresent();
         void renderClean();
